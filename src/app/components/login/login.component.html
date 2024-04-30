@@ -1,13 +1,20 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <input type="email" formControlName="email" placeholder="Email" required>
-    <div *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
-        <p class="error-message">Por favor ingresa un email válido.</p>
-    </div>
-    
-    <input type="password" formControlName="password" placeholder="Password" required>
-    <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
-        <p class="error-message">Por favor ingresa una contraseña válida.</p>
+    <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" formControlName="email"  placeholder="Ingrese su correo electrónico" required>
+        <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.dirty">
+        <p *ngIf="loginForm.get('email')?.hasError('required')">El campo es requerido</p>
+        </div>
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" formControlName="password" placeholder="Ingrese su contraseña" required>
+        <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.dirty">
+        <p *ngIf="loginForm.get('password')?.hasError('required')">El campo es requerido</p>
+        <p *ngIf="loginForm.get('password')?.hasError('minlength')">Minimo de 8 caracteres</p>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
 </form>
